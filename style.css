@@ -1,0 +1,425 @@
+/* style.css */
+
+/*------------------------------------*\
+  #ROOT & CSS VARIABLES
+\*------------------------------------*/
+
+/* Define color palette, fonts, and spacing variables on the root element.
+   Using variables makes it easier to manage themes and maintain consistency. */
+:root {
+    /* Dark Theme Colors (Default) */
+    --color-background-dark: #080815; /* Very dark blue/purple */
+    --color-gradient-start-dark: rgba(10, 10, 30, 1);
+    --color-gradient-end-dark: rgba(5, 5, 15, 1);
+    --color-dots-dark: rgba(200, 200, 255, 0.08); /* Subtle background dots */
+    --color-content-bg-dark: rgba(10, 10, 30, 0.8); /* Semi-transparent content background */
+    --color-border-dark: rgba(120, 120, 220, 0.4); /* Border color for content boxes */
+    --color-shadow-dark: rgba(120, 120, 220, 0.15); /* Subtle glow/shadow */
+    --color-text-primary-dark: #e0e0e0; /* Primary text color */
+    --color-text-secondary-dark: #c0c0d0; /* Slightly dimmer text */
+    --color-heading-dark: #c0c0ff; /* Base H1 (not currently used) */
+    --color-subheading-dark: #a0a0ff; /* H2 titles */
+    --color-header-text-dark: #d0d0ff; /* Header H1 */
+    --color-subtitle-text-dark: #a0a0cc; /* Header subtitle */
+    --color-footer-text-dark: #9090b0; /* Footer text */
+    --color-link-dark: #b0b0ff; /* Footer links */
+    --color-link-hover-dark: #d0d0ff; /* Footer link hover */
+    --color-scrollbar-thumb-dark: rgba(120, 120, 220, 0.5);
+    --color-scrollbar-thumb-hover-dark: rgba(150, 150, 255, 0.7);
+    --color-scrollbar-track-dark: rgba(10, 10, 30, 0.5);
+    --color-list-hover-dark: rgba(120, 120, 220, 0.1); /* Background on list item hover */
+
+    /* Light Theme Colors (Used in @media query) */
+    --color-background-light: #e8e8f0;
+    --color-gradient-start-light: #f0f0f8;
+    --color-gradient-end-light: #e5e5ee;
+    --color-dots-light: rgba(50, 50, 100, 0.08);
+    --color-content-bg-light: rgba(255, 255, 255, 0.85);
+    --color-border-light: rgba(68, 85, 153, 0.4);
+    --color-shadow-light: rgba(68, 85, 153, 0.1);
+    --color-text-primary-light: #222;
+    --color-text-secondary-light: #444;
+    --color-heading-light: #334488;
+    --color-subheading-light: #445599;
+    --color-header-text-light: #334488;
+    --color-subtitle-text-light: #556699;
+    --color-footer-text-light: #556677;
+    --color-link-light: #4455bb;
+    --color-link-hover-light: #223399;
+    --color-scrollbar-thumb-light: rgba(68, 85, 153, 0.4);
+    --color-scrollbar-thumb-hover-light: rgba(68, 85, 153, 0.6);
+    --color-scrollbar-track-light: rgba(200, 200, 220, 0.3);
+    --color-list-hover-light: rgba(68, 85, 153, 0.1);
+
+    /* Fonts */
+    --font-family-base: 'Fira Sans', sans-serif; /* Specify the primary font */
+    --font-weight-light: 300;
+    --font-weight-normal: 400;
+    --font-weight-bold: 700;
+
+    /* Spacing */
+    --spacing-small: 5px;
+    --spacing-medium: 10px;
+    --spacing-large: 15px;
+    --spacing-xlarge: 20px;
+    --spacing-xxlarge: 30px;
+
+    /* Borders */
+    --border-radius: 5px;
+    --border-width: 1px;
+
+    /* Transitions */
+    --transition-speed: 0.2s;
+}
+
+
+/*------------------------------------*\
+  #BASE & RESET STYLES
+\*------------------------------------*/
+
+/* Apply box-sizing border-box globally for intuitive layout calculations.
+   Basic reset to remove default browser margins and paddings. */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base styles for the body - default to dark theme using CSS variables.
+   Sets up flexbox column layout for header, main, footer. */
+body {
+    font-family: var(--font-family-base); /* Apply base font */
+    background-color: var(--color-background-dark); /* Dark background default */
+    background-image:
+        radial-gradient(circle at 1px 1px, var(--color-dots-dark) 1px, transparent 0), /* Subtle dots */
+        linear-gradient(45deg, var(--color-gradient-start-dark) 0%, var(--color-gradient-end-dark) 100%); /* Dark gradient */
+    background-size: 5px 5px, cover; /* Control dot spacing and cover gradient */
+    background-attachment: fixed; /* Prevent background from scrolling with content */
+    color: var(--color-text-primary-dark); /* Dark theme text default */
+    line-height: 1.6; /* Standard line spacing */
+    display: flex;
+    flex-direction: column; /* Arrange children (header, main, footer) vertically */
+    min-height: 100vh; /* Ensure body takes at least full viewport height */
+    padding: 0; /* Remove default body padding; handled by sections */
+}
+
+
+/*------------------------------------*\
+  #HEADER & FOOTER STYLES
+\*------------------------------------*/
+
+/* Styling for the top header bar */
+.page-header {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacing-large) var(--spacing-xlarge) var(--spacing-medium); /* Padding top/bottom/sides */
+    border-bottom: 1px solid rgba(120, 120, 220, 0.2); /* Subtle separator line */
+    flex-shrink: 0; /* Prevent header from shrinking if content is short */
+    background-color: rgba(10, 10, 30, 0.5); /* Optional: Subtle header background */
+}
+
+/* Styling for the main H1 title within the header */
+.page-header h1 {
+    font-family: var(--font-family-base); /* Explicitly set font to ensure consistency */
+    font-size: 2.2em;
+    font-weight: var(--font-weight-light); /* Use lighter weight for main title */
+    color: var(--color-header-text-dark);
+    margin-bottom: var(--spacing-small);
+    text-shadow: 0 0 5px rgba(150, 150, 255, 0.4); /* Subtle glow effect */
+}
+
+/* Styling for the subtitle paragraph within the header */
+.page-header .subtitle {
+    font-size: 1em;
+    color: var(--color-subtitle-text-dark);
+    font-weight: var(--font-weight-light);
+    margin: 0; /* Remove default paragraph margin */
+}
+
+/* Styling for the bottom footer bar */
+.page-footer {
+    width: 100%;
+    text-align: center;
+    padding: var(--spacing-large) var(--spacing-xlarge); /* Padding top/bottom/sides */
+    margin-top: var(--spacing-xxlarge); /* Space above the footer */
+    border-top: 1px solid rgba(120, 120, 220, 0.2); /* Subtle separator line */
+    font-size: 0.85em; /* Smaller text in footer */
+    color: var(--color-footer-text-dark);
+    flex-shrink: 0; /* Prevent footer from shrinking */
+    background-color: rgba(10, 10, 30, 0.5); /* Optional: Subtle footer background */
+}
+
+/* Ensure no extra margins on the paragraph within the footer */
+.page-footer p { margin: 0; }
+
+/* Styling for links within the footer */
+.page-footer a {
+    color: var(--color-link-dark);
+    text-decoration: none; /* Remove default underline */
+    transition: color var(--transition-speed) ease; /* Smooth color transition on hover */
+}
+.page-footer a:hover,
+.page-footer a:focus { /* Style on hover/focus */
+    color: var(--color-link-hover-dark);
+    text-decoration: underline; /* Add underline on hover/focus */
+}
+
+
+/*------------------------------------*\
+  #MAIN LAYOUT STRUCTURE (3-Column + Analysis Section)
+\*------------------------------------*/
+
+/* Container for the main content sections */
+.container {
+    width: 100%;
+    max-width: 1800px; /* Maximum width for very large screens */
+    margin: 0 auto; /* Center the container horizontally */
+    padding: var(--spacing-xlarge) var(--spacing-xlarge); /* Padding around content */
+    flex-grow: 1; /* Allow this main area to expand and fill vertical space, pushing footer down */
+    display: flex;
+    flex-direction: column; /* Stack the 3-column section and analysis section vertically */
+    gap: var(--spacing-xxlarge); /* Space between the top 3-column section and bottom analysis section */
+}
+
+/* Section 1: Holds the three columns */
+.three-column-layout {
+    display: flex; /* Arrange columns horizontally */
+    flex-wrap: wrap; /* Allow columns to wrap onto next line on smaller screens */
+    gap: var(--spacing-xlarge); /* Space between the columns */
+    width: 100%;
+    align-items: stretch; /* Make columns equal height if they wrap */
+}
+
+/* Styling for the side columns containing lists */
+.list-column {
+    flex: 1; /* Assign flex properties - adjust basis/grow/shrink for desired relative widths */
+    min-width: 200px; /* Minimum width before wrapping */
+    display: flex; /* Use flex to make the inner .list-box fill height */
+}
+
+/* Styling for the central column containing the chart */
+.chart-column {
+    flex: 3; /* Make chart column wider (takes 3 parts vs 1 part for lists) */
+    min-width: 400px; /* Minimum width before wrapping */
+    display: flex;
+    flex-direction: column; /* Stack H2 title and chart container vertically */
+}
+
+/* Section 2: Holds the passage and interpretation text below the columns */
+.analysis-section {
+    width: 100%;
+    max-width: 1000px; /* Limit width for better text readability */
+    margin: 0 auto; /* Center the analysis section horizontally */
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    gap: var(--spacing-medium); /* Space between heading and text box */
+}
+
+/* Styling for H2 headings within the analysis section */
+.analysis-section h2 {
+    text-align: left; /* Align these headings left */
+    border-bottom-color: rgba(150, 150, 255, 0.2);
+    margin-bottom: var(--spacing-medium);
+    color: var(--color-subheading-dark); /* Use theme color */
+}
+
+/* Shared styling for the passage and summary text boxes */
+.text-content-box {
+    background-color: var(--color-content-bg-dark);
+    border: var(--border-width) solid var(--color-border-dark);
+    box-shadow: 0 0 15px var(--color-shadow-dark);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-xlarge);
+    font-size: 0.95em;
+    color: var(--color-text-secondary-dark);
+    margin-bottom: var(--spacing-xlarge); /* Space below each box */
+}
+.text-content-box p, .text-content-box ul { margin-bottom: var(--spacing-medium); }
+.text-content-box p:last-child, .text-content-box ul:last-child { margin-bottom: 0; }
+.text-content-box hr { border: none; height: 1px; background-color: rgba(120, 120, 220, 0.2); margin: var(--spacing-large) 0; }
+.text-content-box code { background-color: rgba(255, 255, 255, 0.1); padding: 0.1em 0.4em; border-radius: 3px; font-size: 0.9em; }
+
+
+/*------------------------------------*\
+  #COMPONENTS (Chart, Lists specific styles)
+\*------------------------------------*/
+
+/* H2 title specific to the chart column */
+.chart-column h2 {
+    text-align: center; /* Center the "3D Embedding Space" title */
+    color: var(--color-subheading-dark); /* Theme color */
+}
+
+/* Container holding the Plotly chart div */
+#chart-container {
+    flex-grow: 1; /* Allow chart container to fill vertical space in its column */
+    border: var(--border-width) solid var(--color-border-dark);
+    background-color: var(--color-content-bg-dark);
+    box-shadow: 0 0 15px var(--color-shadow-dark);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-medium); /* Padding inside the border, around the chart */
+    min-height: 65vh; /* Minimum height for the chart area */
+    display: flex; /* To help the inner #chart div fill it */
+    position: relative; /* Context for potential absolute positioning of children if needed */
+}
+
+/* The div where Plotly actually renders */
+#chart {
+    width: 100%;
+    height: 100%; /* Make Plotly chart fill its container */
+}
+
+/* Container box for word/token lists */
+.list-box {
+    background-color: var(--color-content-bg-dark);
+    border: var(--border-width) solid var(--color-border-dark);
+    box-shadow: 0 0 15px var(--color-shadow-dark);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-large);
+    display: flex; /* Arrange H2 and UL vertically */
+    flex-direction: column;
+    width: 100%; /* Ensure box fills its column */
+    flex-grow: 1; /* Allow box to fill height of its column */
+}
+
+/* H2 titles within list boxes */
+.list-box h2 {
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: var(--spacing-medium);
+    text-align: left; /* Align "Words" / "Tokens" left */
+    border-bottom-color: rgba(150, 150, 255, 0.2); /* Dimmer underline */
+    color: var(--color-subheading-dark); /* Theme color */
+}
+
+/* Unordered list (ul) within list boxes */
+.list-box ul {
+    list-style: none; /* Remove default bullets */
+    font-size: 0.9em;
+    overflow-y: auto; /* Enable vertical scrollbar if content overflows */
+    flex-grow: 1; /* Allow list to take up available vertical space */
+    color: var(--color-text-secondary-dark);
+    min-height: 100px; /* Prevent list from collapsing completely if empty */
+}
+
+/* Class specifically for scrollable list areas */
+.scrollable {
+     max-height: 60vh; /* Max height before scrolling starts (relative to viewport) */
+     overflow-y: auto;
+     padding-right: var(--spacing-small); /* Space for scrollbar to avoid content overlap */
+}
+
+/* Individual list items (li) */
+.list-box ul li {
+    padding: 3px var(--spacing-small);
+    border-radius: 3px;
+    transition: background-color var(--transition-speed) ease; /* Smooth hover effect */
+}
+.list-box ul li:hover {
+    background-color: var(--color-list-hover-dark); /* Subtle background on hover */
+    cursor: default; /* Standard cursor as they are not clickable yet */
+}
+
+/* Custom Scrollbar Styling (for Webkit browsers like Chrome, Safari, Edge) */
+.list-box ul::-webkit-scrollbar { width: 6px; /* Width of the scrollbar */ }
+.list-box ul::-webkit-scrollbar-track { background: var(--color-scrollbar-track-dark); border-radius: 3px; /* Background of the track */ }
+.list-box ul::-webkit-scrollbar-thumb { background-color: var(--color-scrollbar-thumb-dark); border-radius: 3px; /* The draggable scroll handle */ }
+.list-box ul::-webkit-scrollbar-thumb:hover { background-color: var(--color-scrollbar-thumb-hover-dark); /* Color on hover */ }
+
+/* Plotly Specific Adjustments - Ensure Plotly internal backgrounds are transparent */
+.plotly-graph-div .plot-container .svg-container,
+.plotly-graph-div .gl-container { /* Targets both SVG and WebGL renderers */
+    background: transparent !important; /* Force override Plotly defaults */
+}
+
+
+/*------------------------------------*\
+  #MEDIA QUERIES & RESPONSIVENESS
+\*------------------------------------*/
+
+/* Light Mode Adaptation - Overrides dark theme variables */
+@media (prefers-color-scheme: light) {
+    body {
+        background-color: var(--color-background-light);
+        background-image:
+            radial-gradient(circle at 1px 1px, var(--color-dots-light) 1px, transparent 0),
+            linear-gradient(45deg, var(--color-gradient-start-light) 0%, var(--color-gradient-end-light) 100%);
+        color: var(--color-text-primary-light);
+    }
+    .page-header {
+        border-bottom-color: rgba(68, 85, 153, 0.2);
+        background-color: rgba(240, 240, 248, 0.5); /* Lighter header background */
+    }
+    .page-header h1 { color: var(--color-header-text-light); text-shadow: none; }
+    .page-header .subtitle { color: var(--color-subtitle-text-light); }
+    .page-footer {
+        border-top-color: rgba(68, 85, 153, 0.2);
+        color: var(--color-footer-text-light);
+        background-color: rgba(240, 240, 248, 0.5); /* Lighter footer background */
+    }
+    .page-footer a { color: var(--color-link-light); }
+    .page-footer a:hover, .page-footer a:focus { color: var(--color-link-hover-light); }
+    h2 { /* General H2 light */
+        color: var(--color-subheading-light);
+        border-bottom-color: rgba(68, 85, 153, 0.3);
+    }
+    /* Ensure H2 colors are overridden correctly in light mode */
+    .list-box h2, .analysis-section h2, .chart-column h2 {
+         color: var(--color-subheading-light);
+    }
+    /* Style for content boxes in light mode */
+    #chart-container, .list-box, .text-content-box {
+        background-color: var(--color-content-bg-light);
+        border-color: var(--color-border-light);
+        box-shadow: 0 0 10px var(--color-shadow-light);
+        color: var(--color-text-primary-light); /* Base text in boxes */
+    }
+     /* Dimmer text for secondary content in light mode */
+     .text-content-box, .list-box ul {
+         color: var(--color-text-secondary-light);
+     }
+      .text-content-box hr { background-color: rgba(68, 85, 153, 0.2); }
+      .text-content-box code { background-color: rgba(0, 0, 50, 0.05); } /* Light code background */
+     .list-box ul li:hover { background-color: var(--color-list-hover-light); }
+    /* Custom Scrollbar Light */
+    .list-box ul::-webkit-scrollbar-track { background: var(--color-scrollbar-track-light); }
+    .list-box ul::-webkit-scrollbar-thumb { background-color: var(--color-scrollbar-thumb-light); }
+    .list-box ul::-webkit-scrollbar-thumb:hover { background-color: var(--color-scrollbar-thumb-hover-light); }
+    /* JS updates Plotly internal colors */
+}
+
+/* Responsive layout: Stack columns on medium/tablet screens */
+@media (max-width: 1024px) {
+    .three-column-layout {
+        flex-direction: column; /* Stack columns vertically */
+    }
+    .list-column, .chart-column {
+        min-width: 100%; /* Allow columns to take full width */
+        flex: 1; /* Reset flex basis */
+    }
+    .list-column {
+         max-height: 30vh; /* Limit list height when stacked */
+         min-height: 200px; /* Ensure some space */
+    }
+     .chart-column {
+         min-height: 50vh; /* Ensure chart has reasonable height */
+         order: -1; /* Optional: Move chart column visually above lists when stacked */
+     }
+     .scrollable { max-height: 25vh; } /* Adjust scroll height */
+     .analysis-section { max-width: 95%; } /* Allow text to use slightly more width */
+}
+
+/* Responsive layout: Adjustments for smaller mobile screens */
+@media (max-width: 600px) {
+    body { padding: 0 var(--spacing-medium) var(--spacing-small); } /* Adjust body padding */
+    .container { padding: var(--spacing-medium) 0; gap: var(--spacing-large); }
+    .page-header { padding: var(--spacing-medium); }
+    .page-header h1 { font-size: 1.8em; }
+    .page-header .subtitle { font-size: 0.9em; }
+    .page-footer { font-size: 0.8em; margin-top: var(--spacing-large); padding: var(--spacing-medium); }
+    h2 { font-size: 1.25em; } /* Slightly smaller headings */
+    /* Reduce padding on content boxes */
+    .list-box, .text-content-box, #chart-container { padding: var(--spacing-medium); }
+    .list-column { max-height: 25vh; min-height: 150px; }
+    .chart-column { min-height: 40vh; }
+}

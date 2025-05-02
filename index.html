@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Words vs Tokens - AI Embedding Explorer | Christi Mahu</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="page-header">
+        <h1>Words vs Tokens</h1>
+        <p class="subtitle">An interactive 3D exploration of GloVe word and token embedding relationships.</p>
+    </header>
+
+    <main class="container">
+
+        <section class="three-column-layout">
+            <div class="list-column words-column">
+                <div class="list-box">
+                    <h2>Words</h2>
+                    <ul id="word-list" class="scrollable"></ul>
+                </div>
+            </div>
+
+            <div class="chart-column">
+                 <h2>3D Embedding Space</h2>
+                 <div id="chart-container" role="figure">
+                    <div id="chart"></div>
+                 </div>
+            </div>
+
+            <div class="list-column tokens-column">
+                 <div class="list-box">
+                    <h2>Tokens</h2>
+                    <ul id="token-list" class="scrollable"></ul>
+                 </div>
+            </div>
+        </section>
+
+        <section class="analysis-section">
+            <h2>Analyzed Passage</h2>
+            <div id="passage-container" class="info-box text-content-box">
+                 <p id="passage-text-placeholder"><em>Loading passage...</em></p>
+            </div>
+
+            <h2>Interpretation & Findings</h2>
+            <div id="summary" class="info-box text-content-box">
+                <p>
+                    This interactive 3D visualization explores the spatial relationships between word embeddings (magenta markers) and 5-character sub-word token embeddings (cyan markers) derived from the analyzed text passage. Using the GloVe model, vectors representing meaning/context are generated and then reduced to three dimensions via PCA. Proximity in this 3D space indicates similarity. Dashed purple lines connect nearby words, while dotted grey lines connect nearby tokens (below a distance threshold).
+                 </p>
+                 <p>
+                    <strong>Hypothesis:</strong> Word embeddings and token embeddings capture language structure differently. Words may represent broader semantic concepts learned from diverse usage. Tokens, as substrings, might reflect relationships influenced more by local character patterns and orthographic similarity.
+                 </p>
+                 <hr>
+                 <p><strong>Observations & Interpretation:</strong></p>
+                 <ul style="padding-left: 20px; margin-top: 10px; list-style: disc;">
+                     <li style="margin-bottom: 15px;">
+                         <strong>Semantic Clustering of Words (Magenta):</strong> Distinct groupings based on meaning are visible. For example, words central to the passage's theme like <code>sunlight</code>, <code>raindrops</code>, <code>rainbow</code>, <code>light</code>, <code>colors</code>, <code>prism</code>, <code>beautiful</code>, and <code>atmosphere</code> occupy a related region. Words related to shape and path (<code>shape</code>, <code>round</code>, <code>arch</code>, <code>path</code>) also show proximity. Function words (<code>the</code>, <code>a</code>, <code>in</code>, <code>is</code>, <code>its</code>, <code>they</code>, <code>these</code>, <code>with</code>) cluster differently based on grammatical role, typical for word embeddings. The dashed purple lines often connect these semantically related neighbors, illustrating learned meaning from broad context.
+                     </li>
+                     <li style="margin-bottom: 15px;">
+                         <strong>Token Proximity & Orthography (Cyan):</strong> Tokens frequently appear near their "parent" words (e.g., <code>sunli</code> near <code>sunlight</code>). However, the token space is densely packed because many words share 5-character sequences (like the token <code>light</code> appearing in both <code>sunlight</code> and <code>white light</code>, or <code>ision</code> in <code>division</code>). This overlap pulls tokens together based on shared character patterns (orthographic similarity), even if the parent words are semantically distant. For instance, the token <code>light</code> connects embeddings related to both <code>sunlight</code> and <code>white light</code> at a sub-word level.
+                     </li>
+                     <li style="margin-bottom: 15px;">
+                         <strong>Structural Differences (Lines):</strong> The different patterns formed by the word links (dashed purple) and token links (dotted grey) highlight the distinct nature of the information captured. The dense web of dotted grey token-token links shows relationships driven heavily by shared characters – many tokens are "close" simply because they look similar. In contrast, the sparser dashed purple word-word links connect words based more on semantic relatedness within the passage or learned global context.
+                     </li>
+                      <li style="margin-bottom: 10px;">
+                         <strong>Word vs. Token Meaning Representation:</strong> These observations support the hypothesis. Word positions reflect meanings learned from diverse contexts ("supervised" by usage). Token positions are heavily influenced by local character patterns and co-occurrence statistics ("unsupervised" statistical properties). The visualization shows these related but distinct representations coexist in the embedding space.
+                     </li>
+                 </ul>
+                  <hr>
+                 <p>
+                    <strong>Dimensionality Reduction Caveat:</strong> Remember, this is a 3D projection (via PCA) of a 50-dimensional space. PCA preserves major variance (similarity/distance), but some nuance might be lost. Points close in 3D were close in 50D, but apparent distance in 3D doesn't perfectly capture all high-dimensional relationships.
+                 </p>
+                 <p>
+                    <em>This visualization provides a glimpse into spatial representations of meaning. Use your mouse to rotate, zoom, and hover over points to explore specific relationships!</em>
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="page-footer">
+        <p>
+            Made by <a href="https://christimahu.com/software" target="_blank" rel="noopener noreferrer">Christi Mahu</a>
+            for a class discussion (<a href="https://www.pce.uw.edu/certificates/machine-learning" target="_blank" rel="noopener noreferrer">UW PCE Machine Learning</a>).
+            Current time in <abbr title="Pacific Time Zone (Marina del Rey, CA)">PT</abbr>: <span id="current-time">Loading...</span>.
+        </p>
+    </footer>
+
+    <script src="main.js" defer></script>
+
+</body>
+</html>
